@@ -1,0 +1,21 @@
+{
+  "defaults": {
+    "project": 1,
+    "env": 1
+  },
+  "projects": [
+    {
+      "idx": 1,
+      "id": "80411000000014038",
+      "name": "Project-Rainfall",
+      "env": [
+        {
+          "idx": 1,
+          "id": "80411000000014055",
+          "name": "Development",
+          "type": 3
+        }
+      ]
+    }
+  ]
+}

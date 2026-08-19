@@ -5,3 +5,4 @@ client/src
 client/public
 **/.env.example
 **/.env.local
+**/.env
