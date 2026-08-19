@@ -21,6 +21,7 @@ export default function Appointments() {
       successMessage="Appointment scheduled."
       filterDefs={[
         { key: "status", label: "Status", options: ENUMS.appointmentStatus.map((s) => ({ value: s, label: s })) },
+        { key: "today", label: "When", options: [{ value: "true", label: "Today" }] },
       ]}
       columns={[
         { key: "date", label: "Date", sortable: true, sortValue: (r) => new Date(r.date || 0).getTime(), render: (r) => formatDate(r.date) },

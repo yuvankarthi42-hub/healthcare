@@ -22,7 +22,7 @@ export default function FilterBar({ search, onSearchChange, searchPlaceholder = 
           key={f.key}
           value={values[f.key] || ""}
           onChange={(e) => onChange(f.key, e.target.value)}
-          className="input w-auto min-w-[140px] cursor-pointer bg-white py-2 text-sm"
+          className="input w-auto min-w-[140px] cursor-pointer bg-white py-2 text-sm dark:bg-slate-800"
         >
           <option value="">{f.label}: All</option>
           {f.options.map((o) => (

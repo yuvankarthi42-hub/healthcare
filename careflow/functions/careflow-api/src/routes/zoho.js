@@ -21,7 +21,52 @@ const { unwrapRecord } = require("../mappers");
 const router = express.Router();
 
 const WRITE_BLOCKED = new Set(["auditLog"]);
-const RESERVED_QUERY_KEYS = new Set(["search", "ownerOnly"]);
+const RESERVED_QUERY_KEYS = new Set([
+  "search",
+  "ownerOnly",
+  "dueToday",
+  "overdue",
+  "today",
+  "openOnly",
+  "highRisk",
+  "nearCompletion",
+]);
+
+function isToday(dateStr) {
+  if (!dateStr) return false;
+  const d = new Date(dateStr);
+  const now = new Date();
+  return d.toDateString() === now.toDateString();
+}
+
+function isOverdue(dateStr) {
+  if (!dateStr) return false;
+  return new Date(dateStr) < new Date();
+}
+
+/** Dashboard deep-links use reserved query flags that don't map 1:1 to a single record field. */
+function applySpecialFilters(records, query, moduleKey) {
+  let out = records;
+  if (query.dueToday === "true" && moduleKey === "clinicalTasks") {
+    out = out.filter((t) => !["Completed", "Cancelled"].includes(t.status) && isToday(t.dueDate));
+  }
+  if (query.overdue === "true" && moduleKey === "clinicalTasks") {
+    out = out.filter((t) => !["Completed", "Cancelled"].includes(t.status) && isOverdue(t.dueDate));
+  }
+  if (query.today === "true" && moduleKey === "appointments") {
+    out = out.filter((a) => isToday(a.date) && !["Cancelled"].includes(a.status));
+  }
+  if (query.openOnly === "true" && moduleKey === "escalations") {
+    out = out.filter((e) => !["Resolved", "Dismissed"].includes(e.status));
+  }
+  if (query.highRisk === "true" && moduleKey === "patients") {
+    out = out.filter((p) => ["High", "Critical"].includes(p.riskLevel));
+  }
+  if (query.nearCompletion === "true" && moduleKey === "carePlans") {
+    out = out.filter((p) => p.status === "Active" && (p.completionPct || 0) >= 80);
+  }
+  return out;
+}
 
 function sendError(res, err) {
   const status = err.status && Number(err.status) >= 400 && Number(err.status) < 600 ? Number(err.status) : 500;
@@ -118,6 +163,7 @@ router.get("/:moduleKey", checkModuleAccess, async (req, res) => {
     const entry = REGISTRY[moduleKey];
     let records = await scopedList(moduleKey, req);
     records = applyQuery(records, req.query, entry.searchableFields);
+    records = applySpecialFilters(records, req.query, moduleKey);
     if (req.query.ownerOnly === "true") {
       records = records.filter((r) => isAssignedToUser(r, req.user));
     }

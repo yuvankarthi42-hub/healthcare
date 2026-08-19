@@ -30,7 +30,7 @@ const TABS = [
   { key: "overview", label: "Overview", icon: LayoutGrid },
   { key: "carePlans", label: "Care Plans", icon: ClipboardList },
   { key: "careTeam", label: "Care Team", icon: UsersRound },
-  { key: "tasks", label: "Clinical Tasks", icon: CheckSquare },
+  { key: "tasks", label: "Care Tasks", icon: CheckSquare },
   { key: "diagnostics", label: "Diagnostics", icon: Activity },
   { key: "treatments", label: "Treatment", icon: Pill },
   { key: "appointments", label: "Appointments", icon: Calendar },

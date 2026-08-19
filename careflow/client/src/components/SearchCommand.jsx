@@ -3,12 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { Search, User, ClipboardList, UsersRound, CheckSquare, Activity, Calendar, AlertTriangle, X } from "lucide-react";
 import api from "../lib/apiClient";
 import { runSearch } from "../lib/searchEngine";
+import { PRODUCT_NAME } from "../data/constants";
 
 const TYPE_META = {
   patient: { icon: User, label: "Patient", to: (r) => `/patients/${r.id}` },
   carePlan: { icon: ClipboardList, label: "Care Plan", to: (r) => `/care-plans/${r.id}` },
   careTeam: { icon: UsersRound, label: "Care Team", to: () => `/care-team` },
-  task: { icon: CheckSquare, label: "Task", to: () => `/tasks` },
+  task: { icon: CheckSquare, label: "Care Task", to: () => `/tasks` },
   diagnostic: { icon: Activity, label: "Diagnostic", to: () => `/diagnostics` },
   appointment: { icon: Calendar, label: "Appointment", to: () => `/appointments` },
   escalation: { icon: AlertTriangle, label: "Escalation", to: () => `/escalations` },
@@ -74,15 +75,15 @@ export default function SearchCommand({ open, onClose }) {
   return (
     <div className="fixed inset-0 z-[60] flex items-start justify-center pt-24">
       <div className="absolute inset-0 bg-slate-900/40 animate-fade-in" onClick={onClose} />
-      <div className="relative z-10 w-full max-w-xl animate-fade-in overflow-hidden rounded-2xl bg-white shadow-popover">
-        <div className="flex items-center gap-2.5 border-b border-slate-100 px-4 py-3.5">
+      <div className="relative z-10 w-full max-w-xl animate-fade-in overflow-hidden rounded-2xl bg-white shadow-popover dark:bg-slate-900 dark:ring-1 dark:ring-slate-700">
+        <div className="flex items-center gap-2.5 border-b border-slate-100 px-4 py-3.5 dark:border-slate-800">
           <Search size={17} className="text-slate-400" />
           <input
             ref={inputRef}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search patients, care plans, tasks, diagnostics, appointments, escalations..."
-            className="flex-1 text-sm outline-none placeholder:text-slate-400"
+            className="flex-1 bg-transparent text-sm text-slate-900 outline-none placeholder:text-slate-400 dark:text-slate-100"
           />
           <button onClick={onClose} className="rounded-md p-1 text-slate-400 hover:bg-slate-100">
             <X size={16} />
@@ -119,7 +120,7 @@ export default function SearchCommand({ open, onClose }) {
                 </div>
               );
             })}
-          {query.trim().length < 2 && <p className="px-3 py-6 text-center text-xs text-slate-400">Type at least 2 characters to search across CareFlow.</p>}
+          {query.trim().length < 2 && <p className="px-3 py-6 text-center text-xs text-slate-400">Type at least 2 characters to search across {PRODUCT_NAME}.</p>}
         </div>
       </div>
     </div>

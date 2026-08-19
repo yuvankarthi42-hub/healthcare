@@ -1,4 +1,6 @@
 /** Client-side global search: matches against records already fetched from the generic /api/zoho/* endpoints. */
+import { formatTaskTitle } from "./format";
+
 function match(text, q) {
   return text && String(text).toLowerCase().includes(q);
 }
@@ -21,9 +23,9 @@ export function runSearch(query, { patients, carePlans, careTeam, tasks, diagnos
       .slice(0, 6)
       .map((r) => ({ type: "careTeam", id: r.id, title: r.teamMember, subtitle: `${r.role} - ${r.patientName}`, patientId: r.patientId })),
     tasks: tasks
-      .filter((r) => match(r.name, q) || matchedPatientIds.has(r.patientId))
+      .filter((r) => match(r.name, q) || match(r.taskType, q) || matchedPatientIds.has(r.patientId))
       .slice(0, 6)
-      .map((r) => ({ type: "task", id: r.id, title: r.name, subtitle: r.patientName, patientId: r.patientId })),
+      .map((r) => ({ type: "task", id: r.id, title: formatTaskTitle(r), subtitle: r.patientName, patientId: r.patientId })),
     diagnostics: diagnostics
       .filter((r) => match(r.name, q) || matchedPatientIds.has(r.patientId))
       .slice(0, 6)

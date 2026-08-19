@@ -8,7 +8,7 @@ const MODULE_LABELS = {
   patients: "Patients",
   carePlans: "Care Plans",
   careTeam: "Care Team",
-  clinicalTasks: "Clinical Tasks",
+  clinicalTasks: "Care Tasks",
   diagnostics: "Diagnostics",
   treatment: "Treatment",
   appointments: "Appointments",

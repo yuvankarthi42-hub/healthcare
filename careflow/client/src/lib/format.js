@@ -55,3 +55,16 @@ export function isOverdue(dateStr) {
   if (!dateStr) return false;
   return new Date(dateStr) < new Date();
 }
+
+/** Prefer task type over auto-generated record names for list and dashboard display. */
+export function formatTaskTitle(task) {
+  if (task?.taskType) return task.taskType;
+  if (!task?.name) return "Care Task";
+  const [head] = String(task.name).split(" - ");
+  return head || task.name;
+}
+
+export function formatTaskSubtitle(task) {
+  const parts = [task?.patientName, task?.assignedTo].filter(Boolean);
+  return parts.join(" · ") || "—";
+}

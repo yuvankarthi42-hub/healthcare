@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { HeartPulse, Eye, EyeOff, ChevronRight } from "lucide-react";
+import { HeartPulse, Eye, EyeOff, ChevronRight, Sun, Moon } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
-import { ROLE_LABELS, DEMO_ACCOUNTS, DEMO_PASSWORD } from "../data/constants";
+import { useTheme } from "../context/ThemeContext";
+import { ROLE_LABELS, DEMO_ACCOUNTS, DEMO_PASSWORD, PRODUCT_NAME, PRODUCT_TAGLINE } from "../data/constants";
 
 export default function Login() {
   const { login } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
   const [email, setEmail] = useState("care.coordinator@zohotest.com");
@@ -30,19 +32,27 @@ export default function Login() {
   };
 
   return (
-    <div className="flex min-h-screen bg-slate-50">
+    <div className="relative flex min-h-screen bg-slate-50 dark:bg-slate-950">
+      <button
+        type="button"
+        onClick={toggleTheme}
+        className="absolute right-4 top-4 rounded-lg p-2 text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+        title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+      >
+        {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+      </button>
       <div className="flex w-full flex-col justify-center px-6 py-12 sm:px-12 lg:w-[440px] lg:shrink-0 lg:px-14">
         <div className="mb-8 flex items-center gap-2.5">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-600 text-white">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-600 text-white dark:bg-brand-500">
             <HeartPulse size={20} />
           </div>
           <div>
-            <p className="text-lg font-bold tracking-tight text-slate-900">CareFlow</p>
-            <p className="text-xs text-slate-400">Care Operations Platform</p>
+            <p className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">{PRODUCT_NAME}</p>
+            <p className="text-xs text-slate-400">{PRODUCT_TAGLINE}</p>
           </div>
         </div>
 
-        <h1 className="text-2xl font-bold tracking-tight text-slate-900">Sign in</h1>
+        <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Sign in</h1>
         <p className="mt-1.5 text-sm text-slate-500">One connected workflow for every patient's care journey.</p>
 
         <form onSubmit={submit} className="mt-7 space-y-4">
@@ -73,7 +83,7 @@ export default function Login() {
           </button>
         </form>
 
-        <div className="mt-8 rounded-xl border border-slate-200 bg-white p-4">
+        <div className="mt-8 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
           <p className="mb-2.5 text-xs font-semibold uppercase tracking-wide text-slate-400">Demo accounts</p>
           <div className="max-h-52 space-y-1 overflow-y-auto pr-1">
             {demoAccounts.map((a) => (
@@ -104,7 +114,7 @@ export default function Login() {
         <div className="relative z-10 max-w-md px-10 text-white">
           <p className="text-3xl font-bold leading-tight tracking-tight">Every patient's journey, in one connected workflow.</p>
           <p className="mt-4 text-brand-100/80">
-            Care plans, clinical tasks, diagnostics, treatment, appointments and escalations — unified around the patient, not the paperwork.
+            Care plans, care tasks, diagnostics, treatment, appointments and escalations — unified around the patient, not the paperwork.
           </p>
           <div className="mt-10 grid grid-cols-2 gap-4">
             {[

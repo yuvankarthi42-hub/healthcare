@@ -31,8 +31,14 @@ export default function CarePlansList() {
   const toast = useToast();
   const status = params.get("status") || "";
   const careType = params.get("careType") || "";
+  const nearCompletion = params.get("nearCompletion") || "";
 
-  const { data, loading, error, refetch } = useFetch("/api/zoho/carePlans", { status, careType, search: search || undefined });
+  const { data, loading, error, refetch } = useFetch("/api/zoho/carePlans", {
+    status,
+    careType,
+    nearCompletion: nearCompletion || undefined,
+    search: search || undefined,
+  });
   const { data: patientsData } = useFetch("/api/zoho/patients");
   // Related-record counts (tasks, diagnostics, escalations...) are computed client-side
   // from raw module lists instead of a bespoke "care plans with counts" backend endpoint.
@@ -104,8 +110,9 @@ export default function CarePlansList() {
         filters={[
           { key: "status", label: "Status", options: ENUMS.carePlanStatus.map((s) => ({ value: s, label: s })) },
           { key: "careType", label: "Care Type", options: ENUMS.careType.map((s) => ({ value: s, label: s })) },
+          { key: "nearCompletion", label: "Completion", options: [{ value: "true", label: "Near completion (≥80%)" }] },
         ]}
-        values={{ status, careType }}
+        values={{ status, careType, nearCompletion }}
         onChange={setFilter}
         onClear={() => {
           setSearch("");

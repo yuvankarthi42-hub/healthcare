@@ -127,7 +127,7 @@ export default function CarePlanDetail() {
           />
         </Section>
 
-        <Section title="Clinical Tasks">
+        <Section title="Care Tasks">
           <DataTable
             columns={[
               { key: "name", label: "Task" },

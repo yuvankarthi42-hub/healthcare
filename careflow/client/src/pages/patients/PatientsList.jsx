@@ -29,10 +29,16 @@ export default function PatientsList() {
   const toast = useToast();
   const status = params.get("status") || "";
   const riskLevel = params.get("riskLevel") || "";
+  const highRisk = params.get("highRisk") || "";
 
   // The generic /api/zoho endpoint matches query keys against the domain field name verbatim,
   // and a patient's status lives on the `patientStatus` field (not `status`, unlike other modules).
-  const { data, loading, error, refetch } = useFetch("/api/zoho/patients", { patientStatus: status, riskLevel, search: search || undefined });
+  const { data, loading, error, refetch } = useFetch("/api/zoho/patients", {
+    patientStatus: status,
+    riskLevel,
+    highRisk: highRisk || undefined,
+    search: search || undefined,
+  });
 
   const setFilter = (key, value) => {
     const next = new URLSearchParams(params);
@@ -96,8 +102,9 @@ export default function PatientsList() {
         filters={[
           { key: "status", label: "Status", options: ENUMS.patientStatus.map((s) => ({ value: s, label: s })) },
           { key: "riskLevel", label: "Risk", options: ENUMS.riskLevel.map((s) => ({ value: s, label: s })) },
+          { key: "highRisk", label: "High Risk", options: [{ value: "true", label: "High & Critical" }] },
         ]}
-        values={{ status, riskLevel }}
+        values={{ status, riskLevel, highRisk }}
         onChange={setFilter}
         onClear={() => {
           setSearch("");

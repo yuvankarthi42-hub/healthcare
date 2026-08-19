@@ -1,3 +1,19 @@
+export const PRODUCT_NAME = "HealthCare";
+export const PRODUCT_TAGLINE = "Healthcare Operations Platform";
+
+/** User-facing module names across navigation, page titles, and permissions UI. */
+export const MODULE_LABELS = {
+  clinicalTasks: "Care Tasks",
+  carePlans: "Care Plans",
+  careTeam: "Care Team",
+  careProgress: "Care Progress",
+  diagnostics: "Diagnostics",
+  treatment: "Treatment Plans",
+  appointments: "Appointments",
+  escalations: "Escalations",
+  patients: "Patients",
+};
+
 export const ROLE_LABELS = {
   super_admin: "Super Admin",
   administrator: "Administrator",
@@ -86,7 +102,7 @@ export const MAIN_NAV = [
   { to: "/patients", label: "Patients", icon: "users", moduleKey: "patients" },
   { to: "/care-plans", label: "Care Plans", icon: "clipboard-list", moduleKey: "carePlans" },
   { to: "/care-team", label: "Care Team", icon: "user-group", moduleKey: "careTeam" },
-  { to: "/tasks", label: "Clinical Tasks", icon: "check-square", moduleKey: "clinicalTasks" },
+  { to: "/tasks", label: "Care Tasks", icon: "check-square", moduleKey: "clinicalTasks" },
   { to: "/diagnostics", label: "Diagnostics", icon: "activity", moduleKey: "diagnostics" },
   { to: "/treatments", label: "Treatment Plans", icon: "pill", moduleKey: "treatment" },
   { to: "/appointments", label: "Appointments", icon: "calendar", moduleKey: "appointments" },

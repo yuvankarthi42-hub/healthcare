@@ -41,8 +41,16 @@ export default function Escalations() {
   const severity = params.get("severity") || "";
   const source = params.get("source") || "";
   const ownerOnly = params.get("ownerOnly") === "true";
+  const openOnly = params.get("openOnly") || "";
 
-  const { data, loading, error, refetch } = useFetch("/api/zoho/escalations", { status, severity, source, ownerOnly: ownerOnly || undefined, search: search || undefined });
+  const { data, loading, error, refetch } = useFetch("/api/zoho/escalations", {
+    status,
+    severity,
+    source,
+    ownerOnly: ownerOnly || undefined,
+    openOnly: openOnly || undefined,
+    search: search || undefined,
+  });
 
   const setFilter = (key, value) => {
     const next = new URLSearchParams(params);
@@ -87,11 +95,12 @@ export default function Escalations() {
         onSearchChange={setSearch}
         searchPlaceholder="Search by title, source, or patient..."
         filters={[
+          { key: "openOnly", label: "State", options: [{ value: "true", label: "Open only" }] },
           { key: "status", label: "Status", options: ENUMS.escalationStatus.map((s) => ({ value: s, label: s })) },
           { key: "severity", label: "Severity", options: ENUMS.escalationSeverity.map((s) => ({ value: s, label: s })) },
           { key: "source", label: "Source", options: ENUMS.escalationSource.map((s) => ({ value: s, label: s })) },
         ]}
-        values={{ status, severity, source }}
+        values={{ status, severity, source, openOnly }}
         onChange={setFilter}
         onClear={() => {
           setSearch("");
@@ -230,7 +239,7 @@ function ResolveModal({ escalation, onClose, onResolved, actorName }) {
     try {
       await api.patch(`/api/zoho/escalations/${escalation.id}`, {
         status: "Resolved",
-        resolution: resolution || "Resolved via CareFlow.",
+        resolution: resolution || "Resolved via HealthCare.",
         resolvedBy: actorName,
         resolvedDate: new Date().toISOString().slice(0, 10),
       });

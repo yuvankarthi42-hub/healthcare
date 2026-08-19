@@ -3,6 +3,7 @@ import { Play, Database, ShieldCheck, Info } from "lucide-react";
 import AppShell from "../../components/AppShell";
 import { useToast } from "../../context/ToastContext";
 import { useAuth } from "../../context/AuthContext";
+import { PRODUCT_NAME } from "../../data/constants";
 import { runAutomation as runZohoAutomation } from "../../lib/automationEngine";
 
 // Mirrors ALLOWED_ROLES in functions/careflow-api/src/routes/automation.js.
@@ -36,7 +37,7 @@ export default function Settings() {
             <h3 className="text-sm font-semibold text-slate-800">Data Backbone</h3>
           </div>
           <p className="text-sm text-slate-600">
-            Every persistent CareFlow record — patients, care plans, care team, tasks, diagnostics, treatment plans, appointments, escalations,
+            Every persistent {PRODUCT_NAME} record — patients, care plans, care team, care tasks, diagnostics, treatment plans, appointments, escalations,
             progress, and audit entries — lives in Zoho Projects custom modules. This UI is a purpose-built healthcare layer on top; no external
             database is used as a source of truth.
           </p>
@@ -48,7 +49,7 @@ export default function Settings() {
             <h3 className="text-sm font-semibold text-slate-800">Workflow Automation</h3>
           </div>
           <p className="mb-3 text-sm text-slate-600">
-            CareFlow's escalation engine scans for overdue high-priority tasks, missed appointments, diagnostic results awaiting review,
+            {PRODUCT_NAME}'s escalation engine scans for overdue high-priority care tasks, missed appointments, diagnostic results awaiting review,
             high-risk patients with no recent activity, and care plans nearing their target date with low completion — raising escalations (and
             review tasks) automatically. In this demo it runs on demand; in a production Catalyst deployment it would run on a scheduled Cron
             Trigger calling the same function.
@@ -85,9 +86,9 @@ export default function Settings() {
             <h3 className="text-sm font-semibold text-slate-800">Known Limitations</h3>
           </div>
           <ul className="list-disc space-y-1.5 pl-5 text-sm text-slate-600">
-            <li>Zoho Projects custom modules have no native cross-module lookup fields; relationships are implemented via plain-text reference IDs, resolved by CareFlow's API layer.</li>
-            <li>Zoho Projects picklist fields returned an unrecoverable API error on record create/update, so enum fields (status, priority, severity, etc.) are single-line text fields with validation enforced by CareFlow.</li>
-            <li>Zoho Projects has no API to provision new portal users, so the 8 demo personas are CareFlow's own JWT-based accounts rather than distinct Zoho portal logins.</li>
+            <li>Zoho Projects custom modules have no native cross-module lookup fields; relationships are implemented via plain-text reference IDs, resolved by {PRODUCT_NAME}'s API layer.</li>
+            <li>Zoho Projects picklist fields returned an unrecoverable API error on record create/update, so enum fields (status, priority, severity, etc.) are single-line text fields with validation enforced by {PRODUCT_NAME}.</li>
+            <li>Zoho Projects has no API to provision new portal users, so the 8 demo personas are {PRODUCT_NAME}'s own JWT-based accounts rather than distinct Zoho portal logins.</li>
             <li>See the README for the full list, plus what specifically broke during the build.</li>
           </ul>
         </div>

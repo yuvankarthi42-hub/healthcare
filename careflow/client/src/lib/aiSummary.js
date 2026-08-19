@@ -112,7 +112,7 @@ export function buildPatientAISummary({ patient, carePlans, tasks, diagnostics, 
     generatedAt: new Date().toISOString(),
     isAIGenerated: true,
     disclaimer:
-      "AI-generated operational summary based on existing CareFlow records. This is not a clinical diagnosis or treatment recommendation.",
+      "AI-generated operational summary based on existing HealthCare records. This is not a clinical diagnosis or treatment recommendation.",
     headline: `${patient.fullName} - ${activePlan ? activePlan.name : "No active care plan"}`,
     sections,
     attentionItems,

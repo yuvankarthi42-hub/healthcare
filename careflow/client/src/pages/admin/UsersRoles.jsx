@@ -4,7 +4,7 @@ import AppShell from "../../components/AppShell";
 import DataTable from "../../components/DataTable";
 import ErrorState from "../../components/ErrorState";
 import { useFetch } from "../../lib/useApi";
-import { DEMO_ACCOUNTS, ROLE_LABELS } from "../../data/constants";
+import { DEMO_ACCOUNTS, ROLE_LABELS, PRODUCT_NAME } from "../../data/constants";
 
 export default function UsersRoles() {
   const { data, loading, error, refetch } = useFetch("/api/zoho/careTeam");
@@ -47,7 +47,7 @@ export default function UsersRoles() {
         />
       )}
       <p className="mt-4 text-xs text-slate-400">
-        CareFlow ships 8 demo personas. Zoho Projects does not support programmatic portal-user provisioning, so these
+        {PRODUCT_NAME} ships 8 demo personas. Zoho Projects does not support programmatic portal-user provisioning, so these
         are demo logins rather than distinct Zoho Projects portal accounts.
       </p>
     </AppShell>

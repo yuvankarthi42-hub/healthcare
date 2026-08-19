@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
+import { ThemeProvider } from "./context/ThemeContext";
 import { ToastProvider } from "./context/ToastContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import RequireModule from "./components/RequireModule";
@@ -35,8 +36,9 @@ export default function App() {
   const basename = rawBase === "/" ? undefined : rawBase.replace(/\/$/, "");
   return (
     <BrowserRouter basename={basename}>
-      <AuthProvider>
-        <ToastProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <ToastProvider>
           <Routes>
             <Route path="/login" element={<Login />} />
 
@@ -63,8 +65,9 @@ export default function App() {
 
             <Route path="*" element={<P><Dashboard /></P>} />
           </Routes>
-        </ToastProvider>
-      </AuthProvider>
+          </ToastProvider>
+        </AuthProvider>
+      </ThemeProvider>
     </BrowserRouter>
   );
 }
