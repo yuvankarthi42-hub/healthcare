@@ -1,0 +1,7 @@
+.git
+**/.DS_Store
+**/node_modules
+client/src
+client/public
+**/.env.example
+**/.env.local

@@ -1,0 +1,16 @@
+{
+  "project": {
+    "id": "80411000000014038",
+    "name": "Project-Rainfall"
+  },
+  "client": {
+    "source": "client/dist",
+    "config": "client/catalyst-config.json"
+  },
+  "functions": [
+    {
+      "source": "functions/careflow-api",
+      "config": "functions/careflow-api/catalyst-config.json"
+    }
+  ]
+}

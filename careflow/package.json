@@ -1,0 +1,16 @@
+{
+  "name": "careflow",
+  "private": true,
+  "version": "1.0.0",
+  "description": "CareFlow - a healthcare care-operations SaaS platform built on Zoho Projects and Zoho Catalyst.",
+  "scripts": {
+    "install:all": "npm install --prefix functions/careflow-api && npm install --prefix client",
+    "dev:api": "npm run dev --prefix functions/careflow-api",
+    "dev:client": "npm run dev --prefix client",
+    "dev": "concurrently -n API,CLIENT -c blue,green \"npm:dev:api\" \"npm:dev:client\"",
+    "build:client": "npm run build --prefix client"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.1"
+  }
+}

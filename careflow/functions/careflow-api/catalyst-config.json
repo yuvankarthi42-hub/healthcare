@@ -1,0 +1,10 @@
+{
+  "deployment": {
+    "name": "careflow-api",
+    "stack": "node20",
+    "type": "advancedio"
+  },
+  "execution": {
+    "main": "index.js"
+  }
+}
