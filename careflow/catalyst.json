@@ -4,13 +4,10 @@
     "name": "Project-Rainfall"
   },
   "client": {
-    "source": "client/dist",
-    "config": "client/catalyst-config.json"
+    "source": "client/dist"
   },
-  "functions": [
-    {
-      "source": "functions/careflow-api",
-      "config": "functions/careflow-api/catalyst-config.json"
-    }
-  ]
+  "functions": {
+    "source": "functions",
+    "targets": ["careflow-api"]
+  }
 }

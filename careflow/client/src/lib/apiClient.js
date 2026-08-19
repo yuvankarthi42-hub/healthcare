@@ -30,18 +30,22 @@ export function clearSession() {
 }
 
 api.interceptors.request.use((config) => {
-  if (memoryToken) config.headers.Authorization = `Bearer ${memoryToken}`;
+  // Avoid `Authorization` on Catalyst — the platform treats it as Catalyst OAuth.
+  if (memoryToken) config.headers["X-CareFlow-Token"] = memoryToken;
   return config;
 });
 
 api.interceptors.response.use(
   (res) => res,
   (err) => {
-    if (err.response?.status === 401) {
+    const msg = err.response?.data?.error || "";
+    const isSessionExpired =
+      err.response?.status === 401 &&
+      (msg.includes("Missing authentication token") || msg.includes("Session expired or invalid"));
+    if (isSessionExpired) {
       clearSession();
-      const loginHref = `${import.meta.env.BASE_URL || "/"}login`.replace(/\/{2,}/g, "/");
       if (!window.location.pathname.includes("/login")) {
-        window.location.href = loginHref;
+        window.location.href = (import.meta.env.BASE_URL || "/").replace(/\/{2,}/g, "/");
       }
     }
     return Promise.reject(err);

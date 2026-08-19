@@ -93,8 +93,13 @@ function verifyToken(token) {
 
 /** Express middleware: attaches req.user from a Bearer token, 401s otherwise. */
 function requireAuth(req, res, next) {
+  // Catalyst Advanced I/O intercepts `Authorization: Bearer …` as its own OAuth token.
+  // HealthCare JWT sessions use a dedicated header so they reach this middleware.
+  const dedicated = req.headers["x-careflow-token"];
   const header = req.headers.authorization || "";
-  const token = header.startsWith("Bearer ") ? header.slice(7) : null;
+  const token =
+    (typeof dedicated === "string" && dedicated) ||
+    (header.startsWith("Bearer ") ? header.slice(7) : null);
   if (!token) return res.status(401).json({ error: "Missing authentication token." });
   try {
     req.user = verifyToken(token);

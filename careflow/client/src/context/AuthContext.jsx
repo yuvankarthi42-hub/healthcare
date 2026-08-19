@@ -16,7 +16,7 @@ export function AuthProvider({ children }) {
   const logout = useCallback(() => {
     clearSession();
     setUser(null);
-    window.location.href = `${import.meta.env.BASE_URL || "/"}login`.replace(/\/{2,}/g, "/");
+    window.location.href = (import.meta.env.BASE_URL || "/").replace(/\/{2,}/g, "/");
   }, []);
 
   return <AuthContext.Provider value={{ user, loading: false, login, logout }}>{children}</AuthContext.Provider>;
