@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Modal from "../../components/Modal";
 import api from "../../lib/apiClient";
 import { useToast } from "../../context/ToastContext";
-import { ENUMS } from "../../data/constants";
+import { ENUMS, CARE_TEAM_PEOPLE } from "../../data/constants";
 
 const empty = {
   firstName: "",
@@ -97,13 +97,13 @@ export default function PatientFormModal({ open, onClose, onCreated, patient }) 
         <Text label="Last Name" value={form.lastName} onChange={set("lastName")} required />
         <Text label="Preferred Name" value={form.preferredName} onChange={set("preferredName")} />
         <Text label="Date of Birth" type="date" value={form.dateOfBirth} onChange={set("dateOfBirth")} required />
-        <Select label="Gender" value={form.gender} onChange={set("gender")} options={["Female", "Male", "Non-binary", "Prefer not to say"]} />
+        <Select label="Gender" value={form.gender} onChange={set("gender")} options={ENUMS.gender} />
         <Text label="Phone" value={form.phone} onChange={set("phone")} />
         <Text label="Email" type="email" value={form.email} onChange={set("email")} />
         <Text label="Emergency Contact" value={form.emergencyContact} onChange={set("emergencyContact")} placeholder="Name · Relationship · Phone" />
         <Text label="Address" value={form.address} onChange={set("address")} className="col-span-2" />
-        <Text label="Primary Physician" value={form.primaryPhysician} onChange={set("primaryPhysician")} />
-        <Text label="Care Coordinator" value={form.careCoordinator} onChange={set("careCoordinator")} />
+        <Select label="Primary Physician" value={form.primaryPhysician} onChange={set("primaryPhysician")} options={CARE_TEAM_PEOPLE} optional />
+        <Select label="Care Coordinator" value={form.careCoordinator} onChange={set("careCoordinator")} options={CARE_TEAM_PEOPLE} optional />
         <Text label="Primary Diagnosis" value={form.primaryDiagnosis} onChange={set("primaryDiagnosis")} className="col-span-2" />
         <Text label="Secondary Conditions" value={form.secondaryConditions} onChange={set("secondaryConditions")} className="col-span-2" />
         <Text label="Allergies" value={form.allergies} onChange={set("allergies")} className="col-span-2" />
@@ -111,8 +111,8 @@ export default function PatientFormModal({ open, onClose, onCreated, patient }) 
         <Select label="Patient Status" value={form.patientStatus} onChange={set("patientStatus")} options={ENUMS.patientStatus} />
         <Text label="Insurance Provider" value={form.insuranceProvider} onChange={set("insuranceProvider")} />
         <Text label="Insurance ID" value={form.insuranceId} onChange={set("insuranceId")} />
-        <Text label="Preferred Language" value={form.preferredLanguage} onChange={set("preferredLanguage")} />
-        <Select label="Communication Preference" value={form.communicationPreference} onChange={set("communicationPreference")} options={["Phone", "Email", "SMS", "Portal"]} />
+        <Select label="Preferred Language" value={form.preferredLanguage} onChange={set("preferredLanguage")} options={ENUMS.preferredLanguage} />
+        <Select label="Communication Preference" value={form.communicationPreference} onChange={set("communicationPreference")} options={ENUMS.communicationPreference} />
       </form>
     </Modal>
   );
@@ -126,12 +126,14 @@ function Text({ label, className = "", ...props }) {
     </div>
   );
 }
-function Select({ label, options, className = "", ...props }) {
+function Select({ label, options, className = "", optional = false, value = "", ...props }) {
+  const merged = Array.from(new Set([...(options || []), ...(value ? [value] : [])]));
   return (
     <div className={className}>
       <label className="label">{label}</label>
-      <select className="input" {...props}>
-        {options.map((o) => (
+      <select className="input" value={value} {...props}>
+        {optional && <option value="">Select (optional)...</option>}
+        {merged.map((o) => (
           <option key={o} value={o}>{o}</option>
         ))}
       </select>

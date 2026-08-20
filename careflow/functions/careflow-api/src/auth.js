@@ -3,10 +3,10 @@
  *
  * DEVIATION FROM SPEC (documented in README > What Broke / Limitations):
  * Zoho Projects has no API to programmatically provision new portal users,
- * so the 7 named demo personas cannot be created as real Zoho Projects
+ * so the named demo personas cannot be created as real Zoho Projects
  * logins tied to distinct portal accounts - only one live portal user
  * (the org owner) actually exists. CareFlow therefore ships its own
- * lightweight, server-side credential + JWT session layer for the 8 demo
+ * lightweight, server-side credential + JWT session layer for the demo
  * roles below. This is a real, working login (not a mock): passwords are
  * checked server-side, sessions are signed JWTs, and every privileged Zoho
  * Projects call happens only after that JWT is verified and RBAC-checked.
@@ -24,6 +24,12 @@ const DEMO_PASSWORD = process.env.DEMO_PASSWORD || "CareFlow@2026";
 // seeded Zoho Projects demo data, so role-scoped ("assigned to me") views
 // return meaningful results out of the box.
 const DEMO_USERS = [
+  {
+    email: "superadmin@zohotest.com",
+    role: "super_admin",
+    displayName: "Karthick C",
+    title: "Super Admin",
+  },
   {
     email: "care.coordinator@zohotest.com",
     role: "care_coordinator",
@@ -47,18 +53,6 @@ const DEMO_USERS = [
     role: "lab_technician",
     displayName: "Lab Services",
     title: "Lab Technician",
-  },
-  {
-    email: "admin@zohotest.com",
-    role: "administrator",
-    displayName: "System Administrator",
-    title: "Administrator",
-  },
-  {
-    email: "superadmin@zohotest.com",
-    role: "super_admin",
-    displayName: "Vijay A",
-    title: "Super Admin",
   },
   {
     email: "specialist@zohotest.com",

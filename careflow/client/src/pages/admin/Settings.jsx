@@ -7,7 +7,7 @@ import { PRODUCT_NAME } from "../../data/constants";
 import { runAutomation as runZohoAutomation } from "../../lib/automationEngine";
 
 // Mirrors ALLOWED_ROLES in functions/careflow-api/src/routes/automation.js.
-const AUTOMATION_ROLES = ["super_admin", "administrator", "care_coordinator"];
+const AUTOMATION_ROLES = ["super_admin", "care_coordinator"];
 
 export default function Settings() {
   const [running, setRunning] = useState(false);

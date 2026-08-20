@@ -2,15 +2,14 @@
  * Role-based access control.
  *
  * This encodes the permission matrix from the CareFlow spec (section 16)
- * plus Super Admin (full, system-wide) and Administrator (operational,
- * non-clinical) roles. It is enforced HERE, server-side, on every mutating
- * and every scoped-read request - the frontend's PermissionGate component
- * mirrors these same rules only to shape the UI, never as the sole guard.
+ * plus Super Admin (full, system-wide). It is enforced HERE, server-side,
+ * on every mutating and every scoped-read request - the frontend's
+ * PermissionGate component mirrors these same rules only to shape the UI,
+ * never as the sole guard.
  */
 
 const ROLES = [
   "super_admin",
-  "administrator",
   "physician",
   "nurse",
   "care_coordinator",
@@ -62,20 +61,6 @@ const MATRIX = {
     usersRoles: FULL,
     auditLog: VIEW_ALL,
     settings: FULL,
-  },
-  administrator: {
-    patients: FULL,
-    carePlans: FULL,
-    careTeam: FULL,
-    clinicalTasks: FULL,
-    diagnostics: FULL,
-    treatment: FULL,
-    appointments: FULL,
-    escalations: FULL,
-    careProgress: FULL,
-    usersRoles: VIEW_ALL,
-    auditLog: VIEW_ALL,
-    settings: { ...VIEW_ALL, edit: "org" },
   },
   physician: {
     patients: ASSIGNED_RO,
@@ -165,7 +150,6 @@ const MATRIX = {
 
 const ROLE_LABELS = {
   super_admin: "Super Admin",
-  administrator: "Administrator",
   physician: "Physician",
   nurse: "Nurse",
   care_coordinator: "Care Coordinator",
@@ -266,8 +250,29 @@ function filterByScope(role, moduleKey, records, user) {
 function redactForLimitedView(role, moduleKey, record) {
   const perm = getPermission(role, moduleKey);
   if (perm.view !== "limited") return record;
-  const { id, patientId, fullName, dateOfBirth, gender, riskLevel, primaryDiagnosis } = record;
-  return { id, patientId, fullName, dateOfBirth, gender, riskLevel, primaryDiagnosis, limitedView: true };
+  const {
+    id,
+    patientId,
+    fullName,
+    dateOfBirth,
+    gender,
+    riskLevel,
+    primaryDiagnosis,
+    patientStatus,
+    careCoordinator,
+  } = record;
+  return {
+    id,
+    patientId,
+    fullName,
+    dateOfBirth,
+    gender,
+    riskLevel,
+    primaryDiagnosis,
+    patientStatus,
+    careCoordinator,
+    limitedView: true,
+  };
 }
 
 /** Express middleware factory: require at least `minView` on a module. */

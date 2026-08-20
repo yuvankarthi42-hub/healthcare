@@ -218,7 +218,6 @@ const ENUMS = {
     "Lab Technician",
     "Therapist",
     "Dietitian",
-    "Administrator",
   ],
   careTeamStatus: ["Active", "On Leave", "Removed"],
   taskStatus: ["Not Started", "In Progress", "Blocked", "Completed", "Cancelled"],

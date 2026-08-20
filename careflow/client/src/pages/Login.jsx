@@ -10,7 +10,7 @@ export default function Login() {
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
-  const [email, setEmail] = useState("care.coordinator@zohotest.com");
+  const [email, setEmail] = useState(DEMO_ACCOUNTS[0].email);
   const [password, setPassword] = useState(DEMO_PASSWORD);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");

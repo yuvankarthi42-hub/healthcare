@@ -81,7 +81,13 @@ export default function EntityFormModal({
       }
     >
       <form id="entity-form" onSubmit={submit} className="grid grid-cols-2 gap-4">
-        {fields.map((f) => (
+        {fields.map((f) => {
+          const current = values[f.key] ?? "";
+          const selectOptions =
+            f.type === "select"
+              ? Array.from(new Set([...(f.options || []), ...(current ? [current] : [])]))
+              : [];
+          return (
           <div key={f.key} className={f.colSpan === 2 ? "col-span-2" : ""}>
             <label className="label">
               {f.label}
@@ -107,30 +113,31 @@ export default function EntityFormModal({
                 ))}
               </select>
             ) : f.type === "select" ? (
-              <select className="input" value={values[f.key] ?? ""} onChange={set(f.key)} required={f.required}>
-                <option value="" disabled>
-                  Select...
+              <select className="input" value={current} onChange={set(f.key)} required={f.required}>
+                <option value="" disabled={f.required}>
+                  {f.required ? "Select..." : "Select (optional)..."}
                 </option>
-                {f.options.map((o) => (
+                {selectOptions.map((o) => (
                   <option key={o} value={o}>
                     {o}
                   </option>
                 ))}
               </select>
             ) : f.type === "textarea" ? (
-              <textarea className="input" rows={3} value={values[f.key] ?? ""} onChange={set(f.key)} required={f.required} />
+              <textarea className="input" rows={3} value={current} onChange={set(f.key)} required={f.required} />
             ) : (
               <input
                 className="input"
                 type={f.type || "text"}
-                value={values[f.key] ?? ""}
+                value={current}
                 onChange={set(f.key)}
                 required={f.required}
                 placeholder={f.placeholder}
               />
             )}
           </div>
-        ))}
+          );
+        })}
       </form>
     </Modal>
   );

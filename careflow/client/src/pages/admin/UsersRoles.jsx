@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-import { Shield } from "lucide-react";
 import AppShell from "../../components/AppShell";
 import DataTable from "../../components/DataTable";
 import ErrorState from "../../components/ErrorState";
@@ -22,14 +20,7 @@ export default function UsersRoles() {
   });
 
   return (
-    <AppShell
-      title="Users & Roles"
-      actions={
-        <Link to="/admin/permission-matrix" className="btn-secondary">
-          <Shield size={14} /> View Permission Matrix
-        </Link>
-      }
-    >
+    <AppShell title="Users & Roles">
       {error && <ErrorState message={error} onRetry={refetch} />}
       {!error && (
         <DataTable
@@ -47,8 +38,8 @@ export default function UsersRoles() {
         />
       )}
       <p className="mt-4 text-xs text-slate-400">
-        {PRODUCT_NAME} ships 8 demo personas. Zoho Projects does not support programmatic portal-user provisioning, so these
-        are demo logins rather than distinct Zoho Projects portal accounts.
+        {PRODUCT_NAME} ships {DEMO_ACCOUNTS.length} demo personas. Zoho Projects does not support programmatic portal-user
+        provisioning, so these are demo logins rather than distinct Zoho Projects portal accounts.
       </p>
     </AppShell>
   );

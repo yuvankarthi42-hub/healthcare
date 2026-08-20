@@ -1,9 +1,18 @@
-import { ENUMS } from "./constants";
+import { ENUMS, CARE_TEAM_PEOPLE } from "./constants";
 
 /** Prepends a patient-picker field for standalone module screens (outside the patient workspace, where the patient is already known). */
 export function withPatientSelect(fields) {
   return [{ key: "patientId", label: "Patient", type: "patientSelect", required: true, colSpan: 2 }, ...fields];
 }
+
+const personSelect = (key, label, { required = false, colSpan } = {}) => ({
+  key,
+  label,
+  type: "select",
+  options: CARE_TEAM_PEOPLE,
+  required,
+  colSpan,
+});
 
 export const carePlanFields = [
   { key: "name", label: "Plan Name", required: true, colSpan: 2 },
@@ -11,7 +20,7 @@ export const carePlanFields = [
   { key: "careType", label: "Care Type", type: "select", options: ENUMS.careType, required: true },
   { key: "startDate", label: "Start Date", type: "date", required: true },
   { key: "targetEndDate", label: "Target End Date", type: "date" },
-  { key: "assignedCoordinator", label: "Assigned Coordinator" },
+  personSelect("assignedCoordinator", "Assigned Coordinator"),
   { key: "priority", label: "Priority", type: "select", options: ENUMS.priority },
   { key: "status", label: "Status", type: "select", options: ENUMS.carePlanStatus },
   { key: "goal", label: "Goal", colSpan: 2 },
@@ -19,9 +28,9 @@ export const carePlanFields = [
 ];
 
 export const careTeamFields = [
-  { key: "teamMember", label: "Team Member Name", required: true },
+  personSelect("teamMember", "Team Member", { required: true }),
   { key: "role", label: "Role", type: "select", options: ENUMS.careTeamRole, required: true },
-  { key: "department", label: "Department" },
+  { key: "department", label: "Department", type: "select", options: ENUMS.department },
   { key: "responsibility", label: "Responsibility", colSpan: 2 },
   { key: "assignmentDate", label: "Assignment Date", type: "date" },
   { key: "status", label: "Status", type: "select", options: ENUMS.careTeamStatus },
@@ -30,7 +39,7 @@ export const careTeamFields = [
 export const taskFields = [
   { key: "name", label: "Task Name", required: true, colSpan: 2 },
   { key: "taskType", label: "Task Type", type: "select", options: ENUMS.taskType, required: true },
-  { key: "assignedTo", label: "Assigned To", required: true },
+  personSelect("assignedTo", "Assigned To", { required: true }),
   { key: "priority", label: "Priority", type: "select", options: ENUMS.priority, required: true },
   { key: "dueDate", label: "Due Date", type: "date", required: true },
   { key: "status", label: "Status", type: "select", options: ENUMS.taskStatus },
@@ -40,7 +49,7 @@ export const taskFields = [
 export const diagnosticFields = [
   { key: "name", label: "Test Name", required: true, colSpan: 2 },
   { key: "testCategory", label: "Test Category", type: "select", options: ENUMS.testCategory, required: true },
-  { key: "orderedBy", label: "Ordered By", required: true },
+  personSelect("orderedBy", "Ordered By", { required: true }),
   { key: "orderedDate", label: "Ordered Date", type: "date", required: true },
   { key: "scheduledDate", label: "Scheduled Date", type: "date" },
   { key: "priority", label: "Priority", type: "select", options: ENUMS.priority },
@@ -52,22 +61,22 @@ export const diagnosticFields = [
 export const treatmentFields = [
   { key: "name", label: "Treatment Name", required: true, colSpan: 2 },
   { key: "treatmentType", label: "Treatment Type", type: "select", options: ENUMS.treatmentType, required: true },
-  { key: "prescribedBy", label: "Prescribed By", required: true },
+  personSelect("prescribedBy", "Prescribed By", { required: true }),
   { key: "startDate", label: "Start Date", type: "date", required: true },
   { key: "endDate", label: "End Date", type: "date" },
-  { key: "frequency", label: "Frequency" },
+  { key: "frequency", label: "Frequency", type: "select", options: ENUMS.frequency },
   { key: "status", label: "Status", type: "select", options: ENUMS.treatmentStatus },
   { key: "adherence", label: "Adherence", type: "select", options: ENUMS.adherence },
   { key: "notes", label: "Notes", type: "textarea", colSpan: 2 },
 ];
 
 export const appointmentFields = [
-  { key: "provider", label: "Provider", required: true },
+  personSelect("provider", "Provider", { required: true }),
   { key: "appointmentType", label: "Appointment Type", type: "select", options: ENUMS.appointmentType, required: true },
   { key: "date", label: "Date", type: "date", required: true },
   { key: "startTime", label: "Start Time", type: "time" },
   { key: "endTime", label: "End Time", type: "time" },
-  { key: "location", label: "Location" },
+  { key: "location", label: "Location", type: "select", options: ENUMS.location },
   { key: "mode", label: "Mode", type: "select", options: ENUMS.appointmentMode },
   { key: "status", label: "Status", type: "select", options: ENUMS.appointmentStatus },
   { key: "reason", label: "Reason", colSpan: 2 },
@@ -78,7 +87,8 @@ export const escalationFields = [
   { key: "name", label: "Title", required: true, colSpan: 2 },
   { key: "source", label: "Source", type: "select", options: ENUMS.escalationSource, required: true },
   { key: "severity", label: "Severity", type: "select", options: ENUMS.escalationSeverity, required: true },
-  { key: "assignedTo", label: "Assigned To", required: true },
+  personSelect("assignedTo", "Assigned To", { required: true }),
+  { key: "status", label: "Status", type: "select", options: ENUMS.escalationStatus },
   { key: "dueDate", label: "Due Date", type: "date" },
   { key: "description", label: "Description", type: "textarea", colSpan: 2, required: true },
 ];

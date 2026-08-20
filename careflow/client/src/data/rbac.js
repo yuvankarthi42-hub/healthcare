@@ -21,10 +21,6 @@ export const MATRIX = {
     patients: FULL, carePlans: FULL, careTeam: FULL, clinicalTasks: FULL, diagnostics: FULL, treatment: FULL,
     appointments: FULL, escalations: FULL, careProgress: FULL, usersRoles: FULL, auditLog: VIEW_ALL, settings: FULL,
   },
-  administrator: {
-    patients: FULL, carePlans: FULL, careTeam: FULL, clinicalTasks: FULL, diagnostics: FULL, treatment: FULL,
-    appointments: FULL, escalations: FULL, careProgress: FULL, usersRoles: VIEW_ALL, auditLog: VIEW_ALL, settings: { ...VIEW_ALL, edit: "org" },
-  },
   physician: {
     patients: ASSIGNED_RO, carePlans: CREATE_EDIT_ALL, careTeam: VIEW_ALL, clinicalTasks: ASSIGNED_RW,
     diagnostics: { view: "all", create: false, edit: "all", delete: false, assign: false }, treatment: FULL,
@@ -77,7 +73,7 @@ export const MODULE_KEYS = [
 ];
 
 export const ROLES = [
-  "super_admin", "administrator", "physician", "nurse", "care_coordinator", "specialist", "lab_technician", "therapist",
+  "super_admin", "physician", "nurse", "care_coordinator", "specialist", "lab_technician", "therapist",
 ];
 
 /**

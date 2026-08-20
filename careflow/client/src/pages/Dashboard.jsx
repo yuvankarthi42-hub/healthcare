@@ -20,7 +20,7 @@ import { buildDashboardData } from "../lib/dashboardMetrics";
 import { runAutomation as runZohoAutomation } from "../lib/automationEngine";
 import { formatTaskTitle, formatTaskSubtitle } from "../lib/format";
 
-const AUTOMATION_ROLES = ["super_admin", "administrator", "care_coordinator"];
+const AUTOMATION_ROLES = ["super_admin", "care_coordinator"];
 
 export default function Dashboard() {
   const { user } = useAuth();

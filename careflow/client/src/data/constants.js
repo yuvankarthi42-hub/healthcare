@@ -16,7 +16,6 @@ export const MODULE_LABELS = {
 
 export const ROLE_LABELS = {
   super_admin: "Super Admin",
-  administrator: "Administrator",
   physician: "Physician",
   nurse: "Nurse",
   care_coordinator: "Care Coordinator",
@@ -27,15 +26,17 @@ export const ROLE_LABELS = {
 
 /** Demo personas for the login picker and Users & Roles screen. Not a data store — these match Zoho Projects seeded care-team names. */
 export const DEMO_ACCOUNTS = [
+  { email: "superadmin@zohotest.com", role: "super_admin", displayName: "Karthick C", title: "Super Admin" },
   { email: "care.coordinator@zohotest.com", role: "care_coordinator", displayName: "Marcus Bellweather, CCM", title: "Care Coordinator" },
   { email: "physician@zohotest.com", role: "physician", displayName: "Dr. Priya Nair", title: "Physician" },
   { email: "nurse@zohotest.com", role: "nurse", displayName: "Renee Alvarez, RN", title: "Registered Nurse" },
   { email: "lab@zohotest.com", role: "lab_technician", displayName: "Lab Services", title: "Lab Technician" },
-  { email: "admin@zohotest.com", role: "administrator", displayName: "System Administrator", title: "Administrator" },
-  { email: "superadmin@zohotest.com", role: "super_admin", displayName: "Vijay A", title: "Super Admin" },
   { email: "specialist@zohotest.com", role: "specialist", displayName: "Dr. Kevin Osei", title: "Orthopedic Specialist" },
   { email: "therapist@zohotest.com", role: "therapist", displayName: "Tom Reyes", title: "Physical Therapist" },
 ];
+
+/** Clinician / care-team names used in form person dropdowns. */
+export const CARE_TEAM_PEOPLE = DEMO_ACCOUNTS.map((a) => a.displayName);
 
 /** Shared demo password for all DEMO_ACCOUNTS. Matches DEMO_PASSWORD in the API .env. */
 export const DEMO_PASSWORD = "CareFlow@2026";
@@ -43,6 +44,9 @@ export const DEMO_PASSWORD = "CareFlow@2026";
 export const ENUMS = {
   patientStatus: ["Active", "Inactive", "Discharged", "Transferred", "Archived"],
   riskLevel: ["Low", "Medium", "High", "Critical"],
+  gender: ["Female", "Male", "Non-binary", "Prefer not to say"],
+  preferredLanguage: ["English", "Spanish", "Hindi", "Tamil", "Mandarin", "Arabic", "French", "Other"],
+  communicationPreference: ["Phone", "Email", "SMS", "Portal"],
   carePlanStatus: ["Draft", "Active", "On Hold", "Completed", "Cancelled"],
   careType: [
     "Chronic Care",
@@ -57,8 +61,22 @@ export const ENUMS = {
     "General Care",
   ],
   priority: ["Low", "Medium", "High", "Urgent"],
-  careTeamRole: ["Physician", "Nurse", "Care Coordinator", "Specialist", "Pharmacist", "Lab Technician", "Therapist", "Dietitian", "Administrator"],
+  careTeamRole: ["Physician", "Nurse", "Care Coordinator", "Specialist", "Pharmacist", "Lab Technician", "Therapist", "Dietitian"],
   careTeamStatus: ["Active", "On Leave", "Removed"],
+  department: [
+    "Cardiology",
+    "Orthopedics",
+    "Oncology",
+    "Primary Care",
+    "Rehabilitation",
+    "Laboratory",
+    "Radiology",
+    "Nursing",
+    "Care Coordination",
+    "Pharmacy",
+    "Physical Therapy",
+    "Emergency",
+  ],
   taskStatus: ["Not Started", "In Progress", "Blocked", "Completed", "Cancelled"],
   taskType: [
     "Follow-up Call",
@@ -78,9 +96,21 @@ export const ENUMS = {
   treatmentType: ["Medication", "Therapy", "Physiotherapy", "Lifestyle", "Diet", "Procedure", "Follow-up"],
   treatmentStatus: ["Planned", "Active", "Paused", "Completed", "Discontinued"],
   adherence: ["Good", "Needs Attention", "Poor", "Unknown"],
+  frequency: ["Once daily", "Twice daily", "Three times daily", "Weekly", "Biweekly", "Monthly", "As needed", "One-time"],
   appointmentType: ["Consultation", "Follow-up", "Diagnostic", "Therapy", "Procedure", "Care Review"],
   appointmentMode: ["In Person", "Video", "Phone"],
   appointmentStatus: ["Scheduled", "Confirmed", "Checked In", "Completed", "No Show", "Cancelled", "Rescheduled"],
+  location: [
+    "Main Clinic - Room 101",
+    "Main Clinic - Room 205",
+    "Cardiology Wing",
+    "Orthopedics Suite",
+    "Lab - Draw Station A",
+    "Imaging Center",
+    "Rehab Gym",
+    "Telehealth",
+    "Home Visit",
+  ],
   escalationSeverity: ["Low", "Medium", "High", "Critical"],
   escalationStatus: ["Open", "Acknowledged", "In Progress", "Resolved", "Dismissed"],
   escalationSource: [

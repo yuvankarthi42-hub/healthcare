@@ -19,7 +19,6 @@ import Appointments from "./pages/Appointments";
 import Escalations from "./pages/Escalations";
 import CareProgress from "./pages/CareProgress";
 import UsersRoles from "./pages/admin/UsersRoles";
-import PermissionMatrix from "./pages/admin/PermissionMatrix";
 import AuditLog from "./pages/admin/AuditLog";
 import Settings from "./pages/admin/Settings";
 
@@ -59,7 +58,6 @@ export default function App() {
             <Route path="/progress" element={<P moduleKey="careProgress"><CareProgress /></P>} />
 
             <Route path="/admin/users" element={<P moduleKey="usersRoles"><UsersRoles /></P>} />
-            <Route path="/admin/permission-matrix" element={<P moduleKey="usersRoles"><PermissionMatrix /></P>} />
             <Route path="/admin/audit-log" element={<P moduleKey="auditLog"><AuditLog /></P>} />
             <Route path="/admin/settings" element={<P moduleKey="settings"><Settings /></P>} />
 
