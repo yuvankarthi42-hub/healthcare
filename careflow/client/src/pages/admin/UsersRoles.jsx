@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+import { Shield } from "lucide-react";
 import AppShell from "../../components/AppShell";
 import DataTable from "../../components/DataTable";
 import ErrorState from "../../components/ErrorState";
@@ -20,7 +22,14 @@ export default function UsersRoles() {
   });
 
   return (
-    <AppShell title="Users & Roles">
+    <AppShell
+      title="Users & Roles"
+      actions={
+        <Link to="/admin/permission-matrix" className="btn-secondary">
+          <Shield size={14} /> View Permission Matrix
+        </Link>
+      }
+    >
       {error && <ErrorState message={error} onRetry={refetch} />}
       {!error && (
         <DataTable
